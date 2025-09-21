@@ -1,0 +1,217 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Happy Birthday Chetna - Final Version</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+  <style>
+    html, body {
+      background: #000;
+      margin: 0;
+      padding: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      font-family: 'Press Start 2P', monospace;
+      touch-action: manipulation;
+    }
+    #canvas {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      display: block;
+      z-index: 1;
+    }
+    .pixel-text {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      letter-spacing: 3.5px;
+      text-shadow: 0 0 8px #fff, 0 0 28px #ff69b4;
+      font-family: 'Press Start 2P', monospace, Arial;
+      font-weight: 900;
+      z-index: 3;
+      opacity: 0;
+      transition: opacity 1.25s ease-in-out;
+      user-select: none;
+      pointer-events: none;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      white-space: nowrap;
+    }
+    #main {
+      top: 25vh;
+      font-size: 2.5em;
+      color: #ffc0cb;
+      font-weight: 900;
+      letter-spacing: 7.5px;
+    }
+    #name {
+      top: 39vh;
+      font-size: 3.6em;
+      color: deeppink;
+      text-shadow: 0 0 20px #fff, 0 0 30px deeppink;
+      font-weight: 900;
+      font-style: italic;
+      letter-spacing: 5.5px;
+      white-space: nowrap;
+    }
+    #end {
+      top: 61vh;
+      font-size: 2.8em;
+      color: #ff69b4;
+      text-shadow: 0 0 12px #ff69b4, 0 0 28px #fff;
+      font-weight: 900;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      transition: opacity 1.8s ease-in-out;
+      user-select: none;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 600px) {
+      #main { font-size: 12vw; letter-spacing: 12px; }
+      #name { font-size: 18vw; letter-spacing: 7px; }
+      #end { font-size: 11vw; text-align: center; }
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+  </style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<div id="main" class="pixel-text">HAPPY BIRTHDAY</div>
+<div id="name" class="pixel-text">CHETNA</div>
+<div id="end" class="pixel-text">I LOVE YOU MY CHERRY 🍒</div>
+<script>
+  document.fonts.load('1em "Press Start 2P"');
+
+  const canvas = document.getElementById('canvas');
+  const ctx = canvas.getContext('2d');
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // Starfield
+  function Star() {
+    this.x = Math.random()*canvas.width;
+    this.y = Math.random()*canvas.height;
+    this.r = 0.9 + Math.random()*1.2;
+    this.color = ['#ff69b4', '#ff1493', '#ff6347', '#ffb6c1', '#ffc0cb', '#ff0000'][Math.floor(Math.random()*6)];
+    this.speed = 0.12+Math.random()*0.19;
+  }
+  Star.prototype.draw = function() {
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.r, 0, 2*Math.PI);
+    ctx.fillStyle = this.color;
+    ctx.globalAlpha = 0.88;
+    ctx.shadowColor = this.color;
+    ctx.shadowBlur = 12;
+    ctx.fill();
+    ctx.restore();
+  };
+  Star.prototype.update = function() {
+    this.y += this.speed/2;
+    if(this.y > canvas.height+2) {
+      this.y = -2;
+      this.x = Math.random()*canvas.width;
+    }
+  };
+
+  let stars=[]; for(let i=0;i<32;++i) stars.push(new Star());
+
+  // Hearts (big and small) with pink & red palette
+  function randomHeartColor() {
+    const colors = ["#FF1493", "#FF69B4", "#FFC0CB", "#FF4500", "#FF6347", "#FF0000"];
+    return colors[Math.floor(Math.random()*colors.length)];
+  }
+
+  function Heart() {
+    this.x = Math.random()*canvas.width;
+    this.y = canvas.height+Math.random()*100+50;
+    this.dy = 1.3 + Math.random()*3.2;
+    this.size = 18 + Math.random()*30;
+    this.color = randomHeartColor();
+    this.swing = Math.random()*Math.PI*2;
+    this.swingSpeed = 0.026 + Math.random() * 0.044;
+  }
+  Heart.prototype.draw = function() {
+    ctx.save();
+    ctx.beginPath();
+    const x = this.x;
+    const y = this.y;
+    const s = this.size / 2;
+    ctx.fillStyle = this.color;
+    ctx.shadowColor = this.color;
+    ctx.shadowBlur = 14;
+    ctx.moveTo(x, y);
+    ctx.bezierCurveTo(x - s, y - s, x - s*2, y + s/3, x, y + s*2);
+    ctx.bezierCurveTo(x + s*2, y + s/3, x + s, y - s, x, y);
+    ctx.fill();
+    ctx.restore();
+  };
+  Heart.prototype.update = function() {
+    this.y -= this.dy;
+    this.swing += this.swingSpeed;
+    this.x += Math.sin(this.swing)*1.3;
+    if(this.y < -50) this.reset();
+  };
+  Heart.prototype.reset = function() {
+    this.x = Math.random()*canvas.width;
+    this.y = canvas.height + 60;
+    this.dy = 1.1 + Math.random()*3.0;
+    this.size = 16 + Math.random()*32;
+    this.color = randomHeartColor();
+    this.swing = Math.random()*Math.PI*2;
+  };
+
+  let hearts = [];
+  for(let i=0;i<16;++i) hearts.push(new Heart());
+
+  // Animation control and sequence
+  const mainDiv = document.getElementById('main');
+  const nameDiv = document.getElementById('name');
+  const endDiv = document.getElementById('end');
+
+  let animStarted = false;
+
+  function timeSequence() {
+    if(animStarted) return;
+    animStarted = true;
+    setTimeout(() => { mainDiv.style.opacity = 1; }, 1000);
+    setTimeout(() => { nameDiv.style.opacity = 1; }, 2300);
+    setTimeout(() => { showHearts = true; }, 3100);
+    setTimeout(() => { endDiv.style.opacity = 1; }, 6000);
+  }
+
+  let showHearts = false;
+
+  function drawScene() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for(let s of stars) { s.draw(); s.update(); }
+    if(showHearts) {
+      for(let h of hearts) { h.draw(); h.update(); }
+    }
+    requestAnimationFrame(drawScene);
+  }
+
+  canvas.addEventListener('touchstart', timeSequence, { once: true });
+  canvas.addEventListener('click', timeSequence, { once: true });
+  document.body.addEventListener('touchstart', timeSequence, { once: true });
+  document.body.addEventListener('click', timeSequence, { once: true });
+
+  resize();
+  drawScene();
+</script>
+</body>
+</html>
