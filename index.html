@@ -1,217 +1,230 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Happy Birthday Chetna - Final Version</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
-  <style>
-    html, body {
-      background: #000;
-      margin: 0;
-      padding: 0;
-      width: 100vw;
-      height: 100vh;
-      overflow: hidden;
-      font-family: 'Press Start 2P', monospace;
-      touch-action: manipulation;
-    }
-    #canvas {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100vw;
-      height: 100vh;
-      display: block;
-      z-index: 1;
-    }
-    .pixel-text {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      text-align: center;
-      letter-spacing: 3.5px;
-      text-shadow: 0 0 8px #fff, 0 0 28px #ff69b4;
-      font-family: 'Press Start 2P', monospace, Arial;
-      font-weight: 900;
-      z-index: 3;
-      opacity: 0;
-      transition: opacity 1.25s ease-in-out;
-      user-select: none;
-      pointer-events: none;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      white-space: nowrap;
-    }
-    #main {
-      top: 25vh;
-      font-size: 1.5em;
-      color: #ffc0cb;
-      font-weight: 900;
-      letter-spacing: 7.5px;
-    }
-    #name {
-      top: 39vh;
-      font-size: 3.6em;
-      color: deeppink;
-      text-shadow: 0 0 20px #fff, 0 0 30px deeppink;
-      font-weight: 900;
-      font-style: italic;
-      letter-spacing: 5.5px;
-      white-space: nowrap;
-    }
-    #end {
-      top: 61vh;
-      font-size: 2.8em;
-      color: #ff69b4;
-      text-shadow: 0 0 12px #ff69b4, 0 0 28px #fff;
-      font-weight: 900;
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      opacity: 0;
-      transition: opacity 1.8s ease-in-out;
-      user-select: none;
-      pointer-events: none;
-      white-space: nowrap;
-    }
-
-    @media (max-width: 600px) {
-      #main { font-size: 12vw; letter-spacing: 12px; }
-      #name { font-size: 18vw; letter-spacing: 7px; }
-      #end { font-size: 11vw; text-align: center; }
-    }
-
-    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-  </style>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Happy Birthday Cherry🍒</title>
+<style>
+  body {
+    margin: 0;
+    background: #0a0426;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: white;
+  }
+  .star-bg {
+    position: fixed;
+    z-index: 0;
+    left: 0; top: 0;
+    width: 100vw; height: 100vh;
+    pointer-events: none;
+  }
+  .scene {
+    perspective: 700px;
+    width: 100vw; height: 100vh;
+    position: absolute; left: 0; top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .card3d {
+    width: 320px; max-width: 92vw; min-height: 460px;
+    background: linear-gradient(135deg,#ffc6e9 92%,#d588be 100%);
+    border: 6px solid #990a3a;
+    border-radius: 38px;
+    box-shadow: 0 10px 25px #18042e22;
+    position: relative; padding: 28px 14px 20px 14px;
+    overflow: visible;
+    transform-style: preserve-3d;
+    will-change: transform;
+    transition: box-shadow 0.3s;
+  }
+  .card-photo {
+    width: 125px; height: 125px; object-fit: cover;
+    border-radius: 50%; border: 5px solid #ff00a6;
+    box-shadow: 0 5px 16px #ffd1dc88;
+    margin-bottom: 18px;
+    transform: translateZ(30px);
+  }
+  h1 {
+    font-size: 1.7rem; margin: 0 0 10px 0;
+    font-weight: bold; text-align: center;
+    background: linear-gradient(90deg,#970035 34%,#ff4684 66%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 5px 12px #e662be44;
+    letter-spacing: 1px;
+    transform: translateZ(40px);
+    animation: fadeInMsg 1.3s ease;
+  }
+  @keyframes fadeInMsg {
+    from { opacity: 0; transform: translateZ(0) scale(0.85);}
+    to   { opacity: 1; transform: translateZ(40px) scale(1);}
+  }
+  p.message {
+    margin: 0 auto;
+    color: #fff;
+    font-size: 1rem;
+    text-align: center;
+    line-height: 1.4;
+    width: 85%;
+    padding: 0 5px;
+    transform: translateZ(30px);
+  }
+  .hearts3d {
+    pointer-events: none;
+    position: absolute;
+    left: 0; top: 0; width: 100%; height: 100%;
+    z-index: 1;
+  }
+  .heart3d {
+    position: absolute;
+    width: 34px; height: 34px;
+    background: linear-gradient(135deg,#f40156 44%,#921f45 100%);
+    border-radius: 60% 60% 80% 80%;
+    clip-path: polygon(
+      50% 80%, 100% 35%, 85% 0, 65% 0, 50% 17%,
+      35% 0, 15% 0, 0 35%, 50% 80%
+    );
+    box-shadow: inset 0 0 8px #a5006691;
+    animation: flyHeart3d 6s linear infinite;
+    opacity: 0.85;
+  }
+  .heart3d:nth-child(1){top:93%;left:17%;animation-delay:0s;}
+  .heart3d:nth-child(2){top:95%;left:67%;animation-delay:0.6s;}
+  .heart3d:nth-child(3){top:90%;left:36%;animation-delay:1.3s;}
+  .heart3d:nth-child(4){top:88%;left:80%;animation-delay:2.3s; background: linear-gradient(135deg,#ff80ab 60%,#d6336c 100%);}
+  .heart3d:nth-child(5){top:94%;left:42%;animation-delay:3.2s; background: linear-gradient(135deg,#d6336c 88%,#ffc1e3 100%);}
+  .heart3d:nth-child(6){top:92%;left:28%;animation-delay:2.6s; background: linear-gradient(135deg,#ff6080 78%,#fdc4f2 100%);}
+  .heart3d:nth-child(7){top:96%;left:55%;animation-delay:4.5s; background: linear-gradient(135deg,#dd336c 60%,#ff8cab 100%);}
+  @keyframes flyHeart3d {
+    0%   { transform: scale(1) translateY(0) translateZ(0) rotateZ(-16deg);}
+    80%  { opacity: 0.85;}
+    100% { transform: scale(1.5) translateY(-100vh) translateZ(40px) rotateZ(30deg); opacity: .15;}
+  }
+  @media(max-width:510px){
+    .card3d{min-height:400px;width:94vw;max-width:97vw;}
+    .card-photo {width:90px;height:90px;}
+    h1 {font-size:1.1rem;}
+    p.message { font-size: 0.9rem; }
+  }
+  #play-overlay {
+    position: fixed;
+    z-index: 9999;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(10,4,38,0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(255, 255, 255);
+    font-size: 1.5rem;
+    user-select: none;
+    cursor: pointer;
+    text-align: center;
+    padding: 0 20px;
+  }
+</style>
 </head>
 <body>
-<canvas id="canvas"></canvas>
-<div id="main" class="pixel-text">HAPPY BIRTHDAY</div>
-<div id="name" class="pixel-text">CHETNA</div>
-<div id="end" class="pixel-text">I LOVE YOU MY CHERRY 🍒</div>
-<script>
-  document.fonts.load('1em "Press Start 2P"');
+  <div class="star-bg"></div>
+  <div class="scene">
+    <div class="card3d" id="card3d">
+      <div class="hearts3d">
+        <div class="heart3d"></div>
+        <div class="heart3d"></div>
+        <div class="heart3d"></div>
+        <div class="heart3d"></div>
+        <div class="heart3d"></div>
+        <div class="heart3d"></div>
+        <div class="heart3d"></div>
+      </div>
+      <img src="IMG-20250916-WA0004.jpg" alt="Chetna's photo" class="card-photo"/>
+      <h1>Happy Birthday Cherry🍒!</h1>
+      <p class="message">Thank you Chetna mor life k asbar lagi mui bahut khus ache tate pai ki tui mor wife, maa, sister, aunty sabu aau sabu bele khus raha tor sange sara jiban bitabar k chanhuche....Maa samlei always bless you mor Cherry😊</p>
+    </div>
+  </div>
 
-  const canvas = document.getElementById('canvas');
-  const ctx = canvas.getContext('2d');
-  function resize() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  }
-  resize();
-  window.addEventListener('resize', resize);
+  <audio id="birthday-audio" src="ishq-wala-love.mp3" loop></audio>
 
-  // Starfield
-  function Star() {
-    this.x = Math.random()*canvas.width;
-    this.y = Math.random()*canvas.height;
-    this.r = 0.9 + Math.random()*1.2;
-    this.color = ['#ff69b4', '#ff1493', '#ff6347', '#ffb6c1', '#ffc0cb', '#ff0000'][Math.floor(Math.random()*6)];
-    this.speed = 0.12+Math.random()*0.19;
-  }
-  Star.prototype.draw = function() {
-    ctx.save();
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.r, 0, 2*Math.PI);
-    ctx.fillStyle = this.color;
-    ctx.globalAlpha = 0.88;
-    ctx.shadowColor = this.color;
-    ctx.shadowBlur = 12;
-    ctx.fill();
-    ctx.restore();
-  };
-  Star.prototype.update = function() {
-    this.y += this.speed/2;
-    if(this.y > canvas.height+2) {
-      this.y = -2;
-      this.x = Math.random()*canvas.width;
+  <div id="play-overlay" style="display:none;">CLICK HERE</div>
+
+  <script>
+    const audio = document.getElementById('birthday-audio');
+    const overlay = document.getElementById('play-overlay');
+
+    function tryPlayAudio() {
+      audio.play().then(() => {
+        // Success playing audio - hide overlay if visible
+        overlay.style.display = 'none';
+      }).catch(() => {
+        // Failed autoplay - show overlay prompt
+        overlay.style.display = 'flex';
+      });
     }
-  };
 
-  let stars=[]; for(let i=0;i<32;++i) stars.push(new Star());
+    // Try autoplay on page load
+    window.addEventListener('load', tryPlayAudio);
 
-  // Hearts (big and small) with pink & red palette
-  function randomHeartColor() {
-    const colors = ["#FF1493", "#FF69B4", "#FFC0CB", "#FF4500", "#FF6347", "#FF0000"];
-    return colors[Math.floor(Math.random()*colors.length)];
-  }
+    // User taps overlay to start music
+    overlay.addEventListener('click', () => {
+      audio.play();
+      overlay.style.display = 'none';
+    });
 
-  function Heart() {
-    this.x = Math.random()*canvas.width;
-    this.y = canvas.height+Math.random()*100+50;
-    this.dy = 1.3 + Math.random()*3.2;
-    this.size = 18 + Math.random()*30;
-    this.color = randomHeartColor();
-    this.swing = Math.random()*Math.PI*2;
-    this.swingSpeed = 0.026 + Math.random() * 0.044;
-  }
-  Heart.prototype.draw = function() {
-    ctx.save();
-    ctx.beginPath();
-    const x = this.x;
-    const y = this.y;
-    const s = this.size / 2;
-    ctx.fillStyle = this.color;
-    ctx.shadowColor = this.color;
-    ctx.shadowBlur = 14;
-    ctx.moveTo(x, y);
-    ctx.bezierCurveTo(x - s, y - s, x - s*2, y + s/3, x, y + s*2);
-    ctx.bezierCurveTo(x + s*2, y + s/3, x + s, y - s, x, y);
-    ctx.fill();
-    ctx.restore();
-  };
-  Heart.prototype.update = function() {
-    this.y -= this.dy;
-    this.swing += this.swingSpeed;
-    this.x += Math.sin(this.swing)*1.3;
-    if(this.y < -50) this.reset();
-  };
-  Heart.prototype.reset = function() {
-    this.x = Math.random()*canvas.width;
-    this.y = canvas.height + 60;
-    this.dy = 1.1 + Math.random()*3.0;
-    this.size = 16 + Math.random()*32;
-    this.color = randomHeartColor();
-    this.swing = Math.random()*Math.PI*2;
-  };
-
-  let hearts = [];
-  for(let i=0;i<16;++i) hearts.push(new Heart());
-
-  // Animation control and sequence
-  const mainDiv = document.getElementById('main');
-  const nameDiv = document.getElementById('name');
-  const endDiv = document.getElementById('end');
-
-  let animStarted = false;
-
-  function timeSequence() {
-    if(animStarted) return;
-    animStarted = true;
-    setTimeout(() => { mainDiv.style.opacity = 1; }, 1000);
-    setTimeout(() => { nameDiv.style.opacity = 1; }, 2300);
-    setTimeout(() => { showHearts = true; }, 3100);
-    setTimeout(() => { endDiv.style.opacity = 1; }, 6000);
-  }
-
-  let showHearts = false;
-
-  function drawScene() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    for(let s of stars) { s.draw(); s.update(); }
-    if(showHearts) {
-      for(let h of hearts) { h.draw(); h.update(); }
+    const starBg = document.querySelector('.star-bg');
+    const starCount = 40;
+    for(let i = 0; i < starCount; i++){
+      const star = document.createElement('div');
+      const size = Math.random() * 2 + 1;
+      star.style.position = 'absolute';
+      star.style.left = Math.random() * 100 + 'vw';
+      star.style.top = Math.random() * 100 + 'vh';
+      star.style.width = size + 'px';
+      star.style.height = size + 'px';
+      star.style.borderRadius = '50%';
+      star.style.background = 'white';
+      star.style.boxShadow = `0 0 ${Math.floor(size*5)}px #f8eaff`;
+      star.style.opacity = (0.4 + Math.random() * 0.5).toFixed(2);
+      star.style.filter = 'blur(0.4px)';
+      star.animate([
+        { opacity: 0.5 + Math.random() * 0.3, transform: 'translateZ(0px)' },
+        { opacity: 1, transform: `translateZ(${Math.random() * 60 + 20}px)` },
+        { opacity: 0.3, transform: 'translateZ(0px)' }
+      ], {
+        duration: Math.random() * 4000 + 4000,
+        iterations: Infinity,
+        direction: 'alternate'
+      });
+      starBg.appendChild(star);
     }
-    requestAnimationFrame(drawScene);
-  }
 
-  canvas.addEventListener('touchstart', timeSequence, { once: true });
-  canvas.addEventListener('click', timeSequence, { once: true });
-  document.body.addEventListener('touchstart', timeSequence, { once: true });
-  document.body.addEventListener('click', timeSequence, { once: true });
-
-  resize();
-  drawScene();
-</script>
+    const card = document.getElementById('card3d');
+    if (window.DeviceOrientationEvent) {
+      let gamma0 = null, beta0 = null;
+      window.addEventListener('deviceorientation', function(event) {
+        if (gamma0 === null) gamma0 = event.gamma;
+        if (beta0 === null) beta0 = event.beta;
+        let rotateY = (event.gamma - gamma0) * 1.2;
+        let rotateX = (event.beta - beta0) * -1.0;
+        rotateY = Math.max(Math.min(rotateY, 18), -18);
+        rotateX = Math.max(Math.min(rotateX, 12), -12);
+        card.style.transform = `rotateY(${rotateY}deg) rotateX(${rotateX}deg) scale(1.02)`;
+      }, true);
+    }
+    card.addEventListener('mousemove', function(e) {
+      const rect = this.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const rotateY = (x / rect.width - 0.5) * 24;
+      const rotateX = (y / rect.height - 0.5) * -15;
+      this.style.transform = `rotateY(${rotateY}deg) rotateX(${rotateX}deg) scale(1.02)`;
+    });
+    card.addEventListener('mouseleave', function() {
+      this.style.transform = '';
+    });
+  </script>
 </body>
 </html>
